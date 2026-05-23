@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestion Produits</title>
+    <title>Nabou GP</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=DM+Sans:wght@300;400;500&display=swap');
 
         :root {
-            --bg: #0a0a0f;
-            --surface: #13131a;
-            --card: #1c1c28;
-            --border: #2a2a3d;
-            --accent: #e94560;
-            --accent2: #7c3aed;
+            --bg: #000000;
+            --surface: #111111;
+            --card: #1a1a1a;
+            --border: #2a2a2a;
+            --accent: #FFD700;
+            --accent2: #c9a84c;
             --text: #f0f0f5;
             --muted: #6b6b80;
             --success: #10b981;
@@ -33,10 +33,9 @@
             min-height: 100vh;
         }
 
-        /* ── Header ── */
         header {
             background: var(--surface);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--accent2);
             padding: 0 40px;
             display: flex;
             align-items: center;
@@ -50,33 +49,55 @@
         .logo {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
-            font-size: 22px;
-            color: var(--text);
+            font-size: 24px;
+            color: var(--accent);
+            letter-spacing: 2px;
         }
 
         .logo span {
-            color: var(--accent);
+            color: var(--accent2);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
         }
 
         .btn-ajouter {
             background: var(--accent);
-            color: #fff;
+            color: #000;
             border: none;
             padding: 10px 22px;
             border-radius: 8px;
             font-family: 'DM Sans', sans-serif;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .btn-ajouter:hover {
-            background: #c73652;
+            background: var(--accent2);
             transform: translateY(-1px);
         }
 
-        /* ── Main ── */
+        .btn-collection {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-collection:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
         main {
             max-width: 1200px;
             margin: 0 auto;
@@ -91,7 +112,7 @@
 
         .stat-card {
             background: var(--card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--accent2);
             border-radius: 12px;
             padding: 20px 28px;
             flex: 1;
@@ -109,6 +130,33 @@
             font-size: 32px;
             font-weight: 800;
             margin-top: 6px;
+            color: var(--accent);
+        }
+
+        /* Filtres collections */
+        .filtres {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filtre-btn {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .filtre-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+            font-weight: 600;
         }
 
         .section-title {
@@ -116,12 +164,11 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 20px;
-            color: var(--muted);
+            color: var(--accent2);
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        /* ── Grille produits ── */
         .grille {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -134,7 +181,6 @@
             border-radius: 16px;
             overflow: hidden;
             transition: transform 0.2s, border-color 0.2s;
-            cursor: pointer;
         }
 
         .produit-card:hover {
@@ -142,11 +188,15 @@
             border-color: var(--accent);
         }
 
+        .produit-card.livre {
+            border-color: var(--success);
+            opacity: 0.8;
+        }
+
         .produit-img {
             width: 100%;
             height: 180px;
             object-fit: cover;
-            background: var(--surface);
         }
 
         .produit-img-placeholder {
@@ -163,19 +213,45 @@
             padding: 16px;
         }
 
+        .produit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+
         .produit-nom {
             font-family: 'Syne', sans-serif;
             font-size: 16px;
             font-weight: 600;
+            flex: 1;
+        }
+
+        .badge-livre {
+            background: var(--success);
+            color: #fff;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        }
+
+        .badge-collection {
+            background: var(--surface);
+            color: var(--accent2);
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            border: 1px solid var(--accent2);
+            display: inline-block;
+            margin-bottom: 6px;
         }
 
         .produit-detail {
             color: var(--muted);
             font-size: 13px;
-            margin-top: 6px;
+            margin-top: 4px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -201,6 +277,7 @@
         .produit-actions {
             display: flex;
             gap: 8px;
+            align-items: center;
         }
 
         .btn-icon {
@@ -228,7 +305,25 @@
             color: #ef4444;
         }
 
-        /* ── Empty state ── */
+        .btn-check {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-check.checked {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
         .empty {
             text-align: center;
             padding: 80px 20px;
@@ -247,12 +342,12 @@
             margin-bottom: 8px;
         }
 
-        /* ── Modal ── */
+        /* Modal */
         .overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             z-index: 200;
             align-items: center;
             justify-content: center;
@@ -265,7 +360,7 @@
 
         .modal {
             background: var(--surface);
-            border: 1px solid var(--border);
+            border: 1px solid var(--accent2);
             border-radius: 20px;
             padding: 36px;
             width: 100%;
@@ -298,6 +393,7 @@
             font-family: 'Syne', sans-serif;
             font-size: 20px;
             font-weight: 700;
+            color: var(--accent);
         }
 
         .btn-close {
@@ -306,10 +402,6 @@
             color: var(--muted);
             font-size: 22px;
             cursor: pointer;
-        }
-
-        .btn-close:hover {
-            color: var(--text);
         }
 
         .form-group {
@@ -347,7 +439,10 @@
             resize: vertical;
         }
 
-        /* Zone image */
+        select.form-input {
+            cursor: pointer;
+        }
+
         .image-zone {
             border: 2px dashed var(--border);
             border-radius: 10px;
@@ -391,7 +486,7 @@
         .btn-submit {
             width: 100%;
             background: var(--accent);
-            color: #fff;
+            color: #000;
             border: none;
             padding: 14px;
             border-radius: 10px;
@@ -404,7 +499,7 @@
         }
 
         .btn-submit:hover {
-            background: #c73652;
+            background: var(--accent2);
         }
 
         .btn-submit:disabled {
@@ -412,7 +507,6 @@
             cursor: not-allowed;
         }
 
-        /* Toast notification */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -443,8 +537,11 @@
 <body>
 
     <header>
-        <div class="logo">Nabou<span> GP</span></div>
-        <button class="btn-ajouter" onclick="ouvrirModal()">+ Ajouter un produit</button>
+        <div class="logo">NABOU<span> GP</span></div>
+        <div class="header-actions">
+            <button class="btn-collection" onclick="ouvrirModalCollection()">📁 Collections</button>
+            <button class="btn-ajouter" onclick="ouvrirModal()">+ Ajouter</button>
+        </div>
     </header>
 
     <main>
@@ -461,48 +558,75 @@
                 <div class="stat-label">Valeur Stock</div>
                 <div class="stat-value" id="stat-valeur">0 F</div>
             </div>
+            <div class="stat-card">
+                <div class="stat-label">Livrés</div>
+                <div class="stat-value" id="stat-livre">0</div>
+            </div>
+        </div>
+
+        <div class="filtres" id="filtres">
+            <button class="filtre-btn active" onclick="filtrer(null, this)">Tous</button>
         </div>
 
         <div class="section-title">Catalogue</div>
         <div class="grille" id="grille"></div>
     </main>
 
-    <!-- Modal Formulaire -->
+    <!-- Modal Produit -->
     <div class="overlay" id="overlay" onclick="fermerModalOverlay(event)">
         <div class="modal">
             <div class="modal-header">
                 <div class="modal-title" id="modal-titre">Nouveau Produit</div>
                 <button class="btn-close" onclick="fermerModal()">✕</button>
             </div>
-
             <div class="form-group">
                 <label class="form-label">Nom du produit *</label>
                 <input type="text" class="form-input" id="input-nom" placeholder="Ex: Chemise en coton" />
             </div>
-
             <div class="form-group">
                 <label class="form-label">Prix (FCFA) *</label>
                 <input type="number" class="form-input" id="input-prix" placeholder="Ex: 15000" min="0" />
             </div>
-
             <div class="form-group">
                 <label class="form-label">Description</label>
                 <textarea class="form-input" id="input-detail" placeholder="Décrivez votre produit..."></textarea>
             </div>
-
+            <div class="form-group">
+                <label class="form-label">Collection</label>
+                <select class="form-input" id="input-collection">
+                    <option value="">-- Aucune collection --</option>
+                </select>
+            </div>
             <div class="form-group">
                 <label class="form-label">Image</label>
-                <div class="image-zone" id="image-zone">
+                <div class="image-zone">
                     <input type="file" id="input-image" accept="image/*" onchange="previewImage(event)" />
                     <div class="image-zone-icon">📷</div>
                     <div class="image-zone-text">Cliquez pour choisir une image</div>
                     <img class="image-preview" id="image-preview" />
                 </div>
             </div>
+            <button class="btn-submit" id="btn-submit" onclick="sauvegarder()">✅ Enregistrer</button>
+        </div>
+    </div>
 
-            <button class="btn-submit" id="btn-submit" onclick="sauvegarder()">
-                ✅ Enregistrer le produit
-            </button>
+    <!-- Modal Collections -->
+    <div class="overlay" id="overlay-collection" onclick="fermerModalCollectionOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">📁 Collections</div>
+                <button class="btn-close" onclick="fermerModalCollection()">✕</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Nouvelle collection</label>
+                <div style="display:flex;gap:10px">
+                    <input type="text" class="form-input" id="input-nouvelle-collection"
+                        placeholder="Ex: Vêtements, Électronique..." />
+                    <button class="btn-ajouter" onclick="ajouterCollection()" style="white-space:nowrap">+
+                        Ajouter</button>
+                </div>
+            </div>
+            <div id="liste-collections"></div>
         </div>
     </div>
 
@@ -511,43 +635,60 @@
     <script>
         const API = 'https://api-produits.onrender.com';
         let produits = [];
+        let collections = [];
         let editId = null;
+        let filtreActif = null;
 
-        // ── Chargement ──────────────────────────────────────────────
         async function charger() {
             try {
-                const res = await fetch(`${API}/produits`);
-                produits = await res.json();
+                const [resProduits, resCollections] = await Promise.all([
+                    fetch(`${API}/produits`),
+                    fetch(`${API}/collections`)
+                ]);
+                produits = await resProduits.json();
+                collections = await resCollections.json();
                 afficher();
                 majStats();
+                majFiltres();
+                majSelectCollections();
             } catch {
                 toast('Impossible de contacter le serveur', true);
             }
         }
 
-        // ── Affichage grille ────────────────────────────────────────
         function afficher() {
             const grille = document.getElementById('grille');
-            if (produits.length === 0) {
-                grille.innerHTML = `
-        <div class="empty" style="grid-column:1/-1">
-          <div class="empty-icon">📭</div>
-          <h3>Aucun produit</h3>
-          <p>Cliquez sur "+ Ajouter un produit" pour commencer</p>
-        </div>`;
+            let liste = filtreActif
+                ? produits.filter(p => p.collection_id == filtreActif)
+                : produits;
+
+            if (liste.length === 0) {
+                grille.innerHTML = `<div class="empty" style="grid-column:1/-1">
+        <div class="empty-icon">📭</div>
+        <h3>Aucun produit</h3>
+        <p>Cliquez sur "+ Ajouter" pour commencer</p>
+      </div>`;
                 return;
             }
-            grille.innerHTML = produits.map(p => `
-      <div class="produit-card">
+
+            grille.innerHTML = liste.map(p => `
+      <div class="produit-card ${p.livre ? 'livre' : ''}">
         ${p.image_url
                     ? `<img class="produit-img" src="${p.image_url}" alt="${p.nom}" />`
                     : `<div class="produit-img-placeholder">📦</div>`}
         <div class="produit-body">
-          <div class="produit-nom">${p.nom}</div>
+          <div class="produit-header">
+            <div class="produit-nom">${p.nom}</div>
+            ${p.livre ? '<span class="badge-livre">✓ Livré</span>' : ''}
+          </div>
+          ${p.collection_nom ? `<span class="badge-collection">📁 ${p.collection_nom}</span>` : ''}
           <div class="produit-detail">${p.detail || 'Aucune description'}</div>
           <div class="produit-footer">
             <div class="produit-prix">${Number(p.prix).toLocaleString('fr-FR')} F</div>
             <div class="produit-actions">
+              <button class="btn-check ${p.livre ? 'checked' : ''}" onclick="toggleLivre(${p.id}, ${p.livre})" title="${p.livre ? 'Marquer non livré' : 'Marquer livré'}">
+                ${p.livre ? '✓' : '○'}
+              </button>
               <button class="btn-icon" onclick="editer(${p.id})" title="Modifier">✏️</button>
               <button class="btn-icon delete" onclick="supprimer(${p.id})" title="Supprimer">🗑️</button>
             </div>
@@ -556,38 +697,120 @@
       </div>`).join('');
         }
 
-        // ── Stats ───────────────────────────────────────────────────
         function majStats() {
             const total = produits.length;
             const moyen = total ? Math.round(produits.reduce((s, p) => s + p.prix, 0) / total) : 0;
             const valeur = produits.reduce((s, p) => s + p.prix, 0);
+            const livres = produits.filter(p => p.livre).length;
             document.getElementById('stat-total').textContent = total;
             document.getElementById('stat-moyen').textContent = moyen.toLocaleString('fr-FR') + ' F';
             document.getElementById('stat-valeur').textContent = valeur.toLocaleString('fr-FR') + ' F';
+            document.getElementById('stat-livre').textContent = livres;
         }
 
-        // ── Modal ───────────────────────────────────────────────────
+        function majFiltres() {
+            const div = document.getElementById('filtres');
+            div.innerHTML = `<button class="filtre-btn ${!filtreActif ? 'active' : ''}" onclick="filtrer(null, this)">Tous</button>`;
+            collections.forEach(c => {
+                div.innerHTML += `<button class="filtre-btn ${filtreActif == c.id ? 'active' : ''}" onclick="filtrer(${c.id}, this)">📁 ${c.nom}</button>`;
+            });
+        }
+
+        function majSelectCollections() {
+            const sel = document.getElementById('input-collection');
+            sel.innerHTML = '<option value="">-- Aucune collection --</option>';
+            collections.forEach(c => {
+                sel.innerHTML += `<option value="${c.id}">${c.nom}</option>`;
+            });
+        }
+
+        function filtrer(id, btn) {
+            filtreActif = id;
+            document.querySelectorAll('.filtre-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            afficher();
+        }
+
+        async function toggleLivre(id, estLivre) {
+            try {
+                await fetch(`${API}/produits/${id}/livre`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ livre: !estLivre })
+                });
+                await charger();
+                toast(!estLivre ? 'Marqué comme livré ✓' : 'Marqué comme non livré');
+            } catch {
+                toast('Erreur', true);
+            }
+        }
+
         function ouvrirModal(p = null) {
             editId = p ? p.id : null;
-            document.getElementById('modal-titre').textContent = p ? '✏️ Modifier le produit' : 'Nouveau Produit';
+            document.getElementById('modal-titre').textContent = p ? '✏️ Modifier' : 'Nouveau Produit';
             document.getElementById('input-nom').value = p ? p.nom : '';
             document.getElementById('input-prix').value = p ? p.prix : '';
             document.getElementById('input-detail').value = p ? p.detail : '';
+            document.getElementById('input-collection').value = p ? (p.collection_id || '') : '';
             document.getElementById('input-image').value = '';
             document.getElementById('image-preview').style.display = 'none';
-            document.getElementById('btn-submit').textContent = p ? '💾 Enregistrer les modifications' : '✅ Enregistrer le produit';
+            document.getElementById('btn-submit').textContent = p ? '💾 Enregistrer les modifications' : '✅ Enregistrer';
             document.getElementById('overlay').classList.add('active');
         }
 
-        function fermerModal() {
-            document.getElementById('overlay').classList.remove('active');
+        function fermerModal() { document.getElementById('overlay').classList.remove('active'); }
+        function fermerModalOverlay(e) { if (e.target === document.getElementById('overlay')) fermerModal(); }
+
+        function ouvrirModalCollection() {
+            afficherListeCollections();
+            document.getElementById('overlay-collection').classList.add('active');
+        }
+        function fermerModalCollection() { document.getElementById('overlay-collection').classList.remove('active'); }
+        function fermerModalCollectionOverlay(e) { if (e.target === document.getElementById('overlay-collection')) fermerModalCollection(); }
+
+        function afficherListeCollections() {
+            const div = document.getElementById('liste-collections');
+            if (collections.length === 0) {
+                div.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">Aucune collection</p>';
+                return;
+            }
+            div.innerHTML = collections.map(c => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--card);border-radius:10px;margin-bottom:8px;border:1px solid var(--border)">
+        <span>📁 ${c.nom}</span>
+        <button class="btn-icon delete" onclick="supprimerCollection(${c.id})">🗑️</button>
+      </div>`).join('');
         }
 
-        function fermerModalOverlay(e) {
-            if (e.target === document.getElementById('overlay')) fermerModal();
+        async function ajouterCollection() {
+            const nom = document.getElementById('input-nouvelle-collection').value.trim();
+            if (!nom) return toast('Entrez un nom', true);
+            try {
+                await fetch(`${API}/collections`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nom })
+                });
+                document.getElementById('input-nouvelle-collection').value = '';
+                await charger();
+                afficherListeCollections();
+                toast('Collection ajoutée ✅');
+            } catch {
+                toast('Erreur', true);
+            }
         }
 
-        // ── Preview image ───────────────────────────────────────────
+        async function supprimerCollection(id) {
+            if (!confirm('Supprimer cette collection ?')) return;
+            try {
+                await fetch(`${API}/collections/${id}`, { method: 'DELETE' });
+                await charger();
+                afficherListeCollections();
+                toast('Collection supprimée');
+            } catch {
+                toast('Erreur', true);
+            }
+        }
+
         function previewImage(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -596,11 +819,11 @@
             preview.style.display = 'block';
         }
 
-        // ── Sauvegarder ─────────────────────────────────────────────
         async function sauvegarder() {
             const nom = document.getElementById('input-nom').value.trim();
             const prix = document.getElementById('input-prix').value.trim();
             const detail = document.getElementById('input-detail').value.trim();
+            const collection_id = document.getElementById('input-collection').value;
             const imageFile = document.getElementById('input-image').files[0];
 
             if (!nom) return toast('Le nom est obligatoire', true);
@@ -614,6 +837,7 @@
             formData.append('nom', nom);
             formData.append('prix', prix);
             formData.append('detail', detail);
+            if (collection_id) formData.append('collection_id', collection_id);
             if (imageFile) formData.append('image', imageFile);
 
             try {
@@ -628,17 +852,15 @@
                 toast('Une erreur est survenue', true);
             } finally {
                 btn.disabled = false;
-                btn.textContent = editId ? '💾 Enregistrer les modifications' : '✅ Enregistrer le produit';
+                btn.textContent = editId ? '💾 Enregistrer les modifications' : '✅ Enregistrer';
             }
         }
 
-        // ── Editer ──────────────────────────────────────────────────
         function editer(id) {
             const p = produits.find(p => p.id === id);
             if (p) ouvrirModal(p);
         }
 
-        // ── Supprimer ───────────────────────────────────────────────
         async function supprimer(id) {
             if (!confirm('Supprimer ce produit ?')) return;
             try {
@@ -650,7 +872,6 @@
             }
         }
 
-        // ── Toast notification ──────────────────────────────────────
         function toast(msg, erreur = false) {
             const t = document.getElementById('toast');
             t.textContent = msg;
@@ -658,7 +879,6 @@
             setTimeout(() => t.classList.remove('show'), 3000);
         }
 
-        // Démarrage
         charger();
     </script>
 </body>
